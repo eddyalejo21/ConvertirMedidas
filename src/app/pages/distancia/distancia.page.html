@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>distancia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-margin ion-padding">
+
+  <form [formGroup]="medidasForm" (submit)="calcularValores()" class="formulario ion-margin">
+    <ion-input label="Valor" label-placement="floating" fill="outline" placeholder="Ingresar valor a convertir"
+      mode="md" style="margin-bottom: 20px;" clearInput="true" maxlength="10" type="tel" inputmode="tel"
+      formControlName="valorMedida" [(ngModel)]="valorMedida"></ion-input>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Medida Origen</ion-label>
+        <ion-select [interfaceOptions]="customActionSheetOptions" placeholder="Seleccionar" interface="action-sheet"
+          cancelText="Cancelar" (ionChange)="seleccionarOrigen($event)">
+          @for (distancia of listaMedidas; track distancia.valorEnMetros){
+          <ion-select-option value="{{distancia.valorEnMetros}}">
+            {{ distancia.medida }}
+          </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Medida Destino</ion-label>
+        <ion-select [interfaceOptions]="customActionSheetOptions" placeholder="Seleccionar" interface="action-sheet"
+          cancelText="Cancelar" (ionChange)="seleccionarDestino($event)">
+          @for (distancia of listaMedidas; track distancia.valorEnMetros){
+          <ion-select-option value="{{distancia.valorEnMetros}}">
+            {{ distancia.medida }}
+          </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-button style="margin-top: 40px;" mode="ios" type="submit" expand="block" 
+      [disabled]="medidasForm.invalid">
+      <ion-icon name="calculator-outline"></ion-icon>
+      Calcular
+    </ion-button>
+
+  </form>
+
+  <ion-item style="margin-top: 40px;">
+    <ion-label>
+      <h2 style="font-weight: bolder;">Resultado:</h2>
+      <p class="ion-text-center" style="font-size: large;">{{valorResultado}}</p>
+    </ion-label>
+  </ion-item>
+
+  <div class="ion-text-center">
+
+    <ion-button style="margin-top: 40px;" fill="outline" size="small" mode="ios" color="tertiary" (click)="limpiarValores()">
+      <ion-icon slot="start" name="trash-bin-outline"></ion-icon>
+      Limpiar
+    </ion-button>
+  </div>
+</ion-content>

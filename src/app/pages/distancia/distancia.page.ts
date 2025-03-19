@@ -58,12 +58,10 @@ export class DistanciaPage implements OnInit {
   }
 
   limpiarValores(){
-    console.log('Limpiar');
     this.valorMedida = null;
     this.valorOrigen = null;
     this.valorDestino = null;
-    this.valorResultado = 0;
-    console.log('Valor Medida =>', this.valorMedida);
+    this.valorResultado = null;
     this.listaMedidas = [...this.listaMedidas];
   }
 

@@ -11,30 +11,54 @@
 
   <form [formGroup]="medidasForm" (submit)="calcular()" class="ion-margin">
 
-    <ion-input label="Valor" label-placement="floating" fill="outline" placeholder="Ingresar valor a convertir"
-      mode="md" clearInput="true" maxlength="10" type="number" inputmode="tel"
-      formControlName="valorMedida"></ion-input>
+    <div>
+      <ion-input label="Convertir" label-placement="floating" fill="outline" placeholder="Ingresar valor a convertir"
+        mode="md" style="margin-bottom: 10px;" clearInput="true" maxlength="10" type="number" inputmode="tel"
+        formControlName="valorMedida" [(ngModel)]="valorMedida"></ion-input>
 
-    <ion-radio-group formControlName="valorOrigen">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Medida Destino</ion-label>
-        </ion-list-header>
+      <ion-input label="Resultado" label-placement="floating" fill="outline" [value]="valorResultado" mode="md"
+        type="tel" inputmode="tel" readonly="true"></ion-input>
+    </div>
+
+    <ion-list lines="none">
+      <ion-list-header>
+        <ion-label>Medida Origen</ion-label>
+      </ion-list-header>
+      <ion-radio-group formControlName="valorOrigen">
 
         @for (temperatura of listaMedidas; track temperatura.valor){
         <ion-item>
           <ion-label>{{ temperatura.medida }}</ion-label>
-          <ion-checkbox slot="start" [checked]="temperatura.seleccionado" (ionChange)="onCheckboxChangeOrigen(temperatura, $event)"
-            [value]="temperatura.valor"></ion-checkbox>
+          <ion-checkbox slot="start" [checked]="temperatura.seleccionado" labelPlacement="end"
+            (ionChange)="onCheckboxChangeOrigen(temperatura, $event)" [value]="temperatura.valor"></ion-checkbox>
         </ion-item>
         }
-      </ion-list>
-    </ion-radio-group>
+      </ion-radio-group>
+    </ion-list>
 
-    <ion-button style="margin-top: 25px;" mode="ios" type="submit" expand="block" 
-      [disabled]="medidasForm.invalid">
+    <ion-list-header>
+      <ion-label>Medida Destino</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-select label="Destino:" [interfaceOptions]="customActionSheetOptions" placeholder="Seleccionar"
+        interface="action-sheet" formControlName="valorDestino" cancelText="Cancelar" (ionChange)="seleccionarDestino($event)">
+        @for (temperatura of listaMedidas; track temperatura.valor){
+        <ion-select-option value="{{temperatura.valor}}">
+          {{ temperatura.medida }}
+        </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-button style="margin-top: 25px;" mode="ios" type="submit" expand="block" [disabled]="medidasForm.invalid">
       <ion-icon name="calculator-outline"></ion-icon>
       Calcular
+    </ion-button>
+
+    <ion-button style="margin-top: 20px;" fill="outline" expand="block" mode="ios" color="tertiary"
+      (click)="limpiarValores()">
+      <ion-icon slot="start" name="trash-bin-outline"></ion-icon>
+      Limpiar
     </ion-button>
 
 

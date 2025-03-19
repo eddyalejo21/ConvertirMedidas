@@ -3,64 +3,57 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Peso</ion-title>
+    <ion-title>Medidas de Peso</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-margin ion-padding">
+<ion-content [fullscreen]="true">
 
 
   <form [formGroup]="medidasForm" (submit)="calcular()" class="ion-margin">
 
-    <ion-input label="Valor" label-placement="floating" fill="outline" placeholder="Ingresar valor a convertir"
-      mode="md" clearInput="true" maxlength="10" type="number" inputmode="tel"
-      formControlName="valorMedida"></ion-input>
+    <div>
+      <ion-input label="Convertir" label-placement="floating" fill="outline" placeholder="Ingresar valor a convertir"
+        mode="md" style="margin-bottom: 10px;" clearInput="true" maxlength="10" type="number" inputmode="tel"
+        formControlName="valorMedida"></ion-input>
 
-      
-    <ion-radio-group formControlName="opcionSeleccionadaOrigen">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Medida Origen</ion-label>
-        </ion-list-header>
+      <ion-input label="Resultado" label-placement="floating" fill="outline" [value]="valorResultado" mode="md"
+        type="tel" inputmode="tel" readonly="true"></ion-input>
+    </div>
 
-        @for (peso of listaMedidas; track peso.valorEnKilos){
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Medida Origen</ion-label>
+      </ion-list-header>
+      <ion-radio-group formControlName="opcionSeleccionadaOrigen">
+        @for (peso of listaMedidas; track peso.valorEnKilos) {
         <ion-item>
-          <ion-label>{{ peso.medida }}</ion-label>
-          <ion-radio slot="end" [value]="peso.valorEnKilos"></ion-radio>
+          <ion-radio [value]="peso.valorEnKilos">{{peso.medida}}</ion-radio>
         </ion-item>
-      }
-      </ion-list>
-    </ion-radio-group>
+        }
+      </ion-radio-group>
+    </ion-list>
 
-    <ion-radio-group formControlName="opcionSeleccionadaDestino">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Medida Destino</ion-label>
-        </ion-list-header>
-
-        @for (peso of listaMedidas; track peso.valorEnKilos){
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Medida Destino</ion-label>
+      </ion-list-header>
+      <ion-radio-group formControlName="opcionSeleccionadaDestino">
+        @for (peso of listaMedidas; track peso.valorEnKilos) {
         <ion-item>
-          <ion-label>{{ peso.medida }}</ion-label>
-          <ion-radio slot="end" [value]="peso.valorEnKilos"></ion-radio>
+          <ion-radio [value]="peso.valorEnKilos">{{peso.medida}}</ion-radio>
         </ion-item>
-      }
-      </ion-list>
-    </ion-radio-group>
+        }
+      </ion-radio-group>
+    </ion-list>
 
-    <ion-button style="margin-top: 25px;" mode="ios" type="submit" expand="block" 
-      [disabled]="medidasForm.invalid">
+    <ion-button style="margin-top: 25px;" mode="ios" type="submit" expand="block" [disabled]="medidasForm.invalid">
       <ion-icon name="calculator-outline"></ion-icon>
       Calcular
     </ion-button>
 
-    <ion-item style="margin-top: 20px;">
-      <ion-label>
-        <h2 style="font-weight: bolder;margin-bottom: 15px;">Resultado:</h2>
-        <p class="ion-text-center" style="font-size: large;color: navy;">{{ valorResultado | number: '1.2-2'}}</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-button style="margin-top: 20px;" fill="outline" expand="block" mode="ios" color="tertiary" (click)="limpiarValores()">
+    <ion-button style="margin-top: 20px;" fill="outline" expand="block" mode="ios" color="tertiary"
+      (click)="limpiarValores()">
       <ion-icon slot="start" name="trash-bin-outline"></ion-icon>
       Limpiar
     </ion-button>

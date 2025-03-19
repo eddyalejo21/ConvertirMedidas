@@ -13,7 +13,11 @@ const routes: Routes = [
   { path: 'home', component: HomePage },
   { path: 'distancia', component: DistanciaPage },
   { path: 'peso', component: PesoPage },
-  { path: 'temperatura', component: TemperaturaPage }
+  { path: 'temperatura', component: TemperaturaPage },  {
+    path: 'prueba',
+    loadChildren: () => import('./pages/prueba/prueba.module').then( m => m.PruebaPageModule)
+  }
+
 
 ];
 
